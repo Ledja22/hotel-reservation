@@ -33,7 +33,10 @@ func main() {
 	appv1 := app.Group("/api/v1")
 	userHandler := api.NewUserHandler(db.NewMongoUserStore(client))
 
+	appv1.Put("/user/:id", userHandler.HandlePutUser)
+	appv1.Delete("/user/:id", userHandler.HandleDeleteUser)
+	appv1.Post("/user", userHandler.HandlePostUser)
 	appv1.Get("/user", userHandler.HandleGetUsers)
-	appv1.Get("/users/", userHandler.HandleGetUser)
+	appv1.Get("/user/:id", userHandler.HandleGetUser)
 	app.Listen(*listenAddr)
 }
