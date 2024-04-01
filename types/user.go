@@ -37,6 +37,10 @@ func (p UpdateUserParams) ToBSON() bson.M {
 	return m
 }
 
+func IsPasswordValid(ecnpw, pw string) bool {
+	return bcrypt.CompareHashAndPassword([]byte(ecnpw), []byte(pw)) == nil
+}
+
 func (params CreateUserParams) Validate() map[string]string {
 	errors := map[string]string{}
 	if len(params.FirstName) < minFirstNameLen {
